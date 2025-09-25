@@ -42,7 +42,7 @@ services:
       PYTHONPATH: /opt/odoo/custom/src/odoo
       SMTP_PORT: "1025"
       WDB_WEB_PORT: "17984"
-      # To avoid installing demo data export DOODBA_WITHOUT_DEMO=all
+      # To avoid installing demo data export DOODBA_WITHOUT_=allDEMO
       WITHOUT_DEMO: "${DOODBA_WITHOUT_DEMO-false}"
     volumes:
       - ./odoo/custom:/opt/odoo/custom:ro,z
@@ -56,7 +56,6 @@ services:
       - proxy_www_googleapis_com
       - proxy_www_gravatar_com
       - smtp
-      - wdb
     command:
       - odoo
       - --limit-memory-soft=0
@@ -90,14 +89,6 @@ services:
     networks: *public
     ports:
       - "127.0.0.1:17025:8025"
-
-  wdb:
-    image: docker.io/kozea/wdb
-    networks: *public
-    ports:
-      - "127.0.0.1:17984:1984"
-    # HACK https://github.com/Kozea/wdb/issues/136
-    init: true
 
   # Whitelist outgoing traffic for tests, reports, etc.
   proxy_cdnjs_cloudflare_com:
