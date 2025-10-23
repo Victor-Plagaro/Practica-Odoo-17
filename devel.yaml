@@ -54,6 +54,10 @@ services:
       - proxy_www_googleapis_com
       - proxy_www_gravatar_com
       - smtp
+      - proxy_www_gobiernodecanarias_org
+      - proxy_www3_gobiernodecanarias_org
+      - proxy_geoNames_org
+      - proxy_canary_rockers
     command:
       - odoo
       - --limit-memory-soft=0
@@ -153,6 +157,50 @@ services:
       public:
     environment:
       TARGET: www.gravatar.com
+      PRE_RESOLVE: 1
+
+  proxy_www_gobiernodecanarias_org:
+    image: ghcr.io/tecnativa/docker-whitelist:latest
+    networks:
+      default:
+        aliases:
+          - www.gobiernodecanarias.org
+      public:
+    environment:
+      TARGET: www.gobiernodecanarias.org
+      PRE_RESOLVE: 1
+
+  proxy_www3_gobiernodecanarias_org:
+    image: ghcr.io/tecnativa/docker-whitelist:latest
+    networks:
+      default:
+        aliases:
+          - www3.gobiernodecanarias.org
+      public:
+    environment:
+      TARGET: www3.gobiernodecanarias.org
+      PRE_RESOLVE: 1
+
+  proxy_geoNames_org:
+    image: ghcr.io/tecnativa/docker-whitelist:latest
+    networks:
+      default:
+        aliases:
+          - download.geonames.org
+      public:
+    environment:
+      TARGET: download.geonames.org
+      PRE_RESOLVE: 1
+
+  proxy_canary_rockers:
+    image: ghcr.io/tecnativa/docker-whitelist:latest
+    networks:
+      default:
+        aliases:
+          - canaryrockers.es
+      public:
+    environment:
+      TARGET: canaryrockers.es
       PRE_RESOLVE: 1
 
 networks:
